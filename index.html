@@ -2,54 +2,192 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>StoryAI - Cartoon Story Maker</title>
 
 <style>
 *{box-sizing:border-box}
+
 body{
- margin:0;font-family:Arial,sans-serif;
- background:#0f1020;color:white;
+margin:0;
+font-family:Arial,sans-serif;
+background:linear-gradient(135deg,#0b1020,#171536,#091b2d);
+color:#fff;
+min-height:100vh;
 }
-.container{max-width:850px;margin:auto;padding:20px}
-header{text-align:center;padding:25px 5px}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:18px;
+}
+
+header{
+text-align:center;
+padding:25px 10px;
+}
+
 .logo{
- font-size:36px;font-weight:bold;
- background:linear-gradient(90deg,#8b5cf6,#00d4ff);
- color:transparent;background-clip:text;
+font-size:42px;
+font-weight:900;
+background:linear-gradient(90deg,#9b6cff,#00e5ff);
+-webkit-background-clip:text;
+color:transparent;
 }
-.sub{color:#aaa;margin-top:8px}
+
+.subtitle{
+color:#b9bfd5;
+margin-top:8px;
+}
+
 .card{
- background:#191b31;padding:20px;margin-top:18px;
- border-radius:18px;border:1px solid #30334d;
+background:rgba(25,28,55,.9);
+border:1px solid #34385d;
+border-radius:22px;
+padding:22px;
+margin-top:18px;
+box-shadow:0 15px 40px rgba(0,0,0,.3);
 }
-label{display:block;font-weight:bold;margin:15px 0 7px}
-textarea,input,select{
- width:100%;padding:14px;border-radius:12px;
- border:1px solid #414562;background:#101224;
- color:white;font-size:16px;
+
+label{
+display:block;
+font-weight:bold;
+margin:15px 0 7px;
 }
-textarea{min-height:110px}
+
+textarea,select{
+width:100%;
+padding:14px;
+border-radius:13px;
+border:1px solid #41466c;
+background:#101426;
+color:white;
+font-size:16px;
+outline:none;
+}
+
+textarea:focus,select:focus{
+border-color:#8b6cff;
+}
+
+#topic{
+min-height:120px;
+resize:vertical;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
 button{
- border:0;border-radius:12px;padding:13px 18px;
- font-weight:bold;cursor:pointer;
+border:0;
+border-radius:13px;
+padding:13px 18px;
+font-weight:bold;
+font-size:15px;
+cursor:pointer;
 }
+
 .generate{
- width:100%;margin-top:18px;
- background:linear-gradient(90deg,#7c3aed,#06b6d4);
- color:white;font-size:17px;
+width:100%;
+margin-top:18px;
+padding:16px;
+font-size:18px;
+color:white;
+background:linear-gradient(90deg,#754cff,#00b8e6);
 }
-.result{margin-top:20px}
+
+.generate:hover{
+opacity:.9;
+}
+
+.smallBtn{
+background:#303655;
+color:white;
+margin-top:8px;
+}
+
+.hidden{
+display:none;
+}
+
+.resultTitle{
+font-size:26px;
+margin-top:0;
+}
+
+.badge{
+display:inline-block;
+background:#292d50;
+color:#bdaeff;
+padding:6px 10px;
+border-radius:20px;
+font-size:12px;
+}
+
 .scene{
- background:#101224;margin:12px 0;padding:15px;
- border-radius:14px;border-left:4px solid #8b5cf6;
+background:#101426;
+border:1px solid #303554;
+border-left:4px solid #8b6cff;
+border-radius:15px;
+padding:16px;
+margin:14px 0;
 }
-.copy{
- background:#303553;color:white;
- padding:7px 10px;float:right;
+
+.sceneHead{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
 }
-.hidden{display:none}
-.footer{text-align:center;color:#777;margin:25px}
+
+.scene h3{
+margin:0;
+color:#c2b5ff;
+}
+
+.copyBtn{
+background:#303655;
+color:white;
+padding:7px 10px;
+font-size:12px;
+}
+
+.box{
+background:#101426;
+padding:14px;
+border-radius:12px;
+margin-top:8px;
+line-height:1.6;
+}
+
+.sectionTitle{
+margin-top:28px;
+color:#9f8cff;
+}
+
+.footer{
+text-align:center;
+color:#737995;
+padding:30px 10px;
+font-size:13px;
+}
+
+@media(max-width:600px){
+.grid{
+grid-template-columns:1fr;
+}
+
+.logo{
+font-size:34px;
+}
+
+.card{
+padding:16px;
+}
+}
 </style>
 </head>
 
@@ -59,11 +197,323 @@ button{
 
 <header>
 <div class="logo">✨ StoryAI</div>
-<div class="sub">
-AI Cartoon Story Maker — कहानी से वीडियो का पूरा प्लान
+<div class="subtitle">
+AI Cartoon Story Maker • Story से YouTube Video Plan
 </div>
 </header>
 
 <div class="card">
 
-<label>🎯 कहानी किस बारे में
+<label>💡 अपनी कहानी का idea लिखें</label>
+
+<textarea id="topic"
+placeholder="उदाहरण: एक शरारती बच्चा जंगल में जाता है और उसे बोलने वाला आम का पेड़ मिलता है..."></textarea>
+
+<div class="grid">
+
+<div>
+<label>🎨 Story Type</label>
+<select id="type">
+<option>Funny Comedy</option>
+<option>Kids Moral Story</option>
+<option>Adventure</option>
+<option>Village Story</option>
+<option>School Story</option>
+<option>Fantasy</option>
+</select>
+</div>
+
+<div>
+<label>⏱️ Video Length</label>
+<select id="duration">
+<option value="30">30 Seconds</option>
+<option value="60">60 Seconds</option>
+<option value="90">90 Seconds</option>
+</select>
+</div>
+
+</div>
+
+<button class="generate" onclick="generateStory()">
+🚀 Generate Story
+</button>
+
+<button class="smallBtn" onclick="fillExample()">
+✨ Example Try करें
+</button>
+
+</div>
+
+<div id="result" class="card hidden"></div>
+
+<div class="footer">
+StoryAI • Cartoon Story Creator
+</div>
+
+</div>
+
+
+<script>
+
+function esc(text){
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+
+function fillExample(){
+
+document.getElementById("topic").value=
+"एक शरारती बच्चा जंगल में जाता है और उसे बोलने वाला आम का पेड़ मिलता है।";
+
+}
+
+
+function generateStory(){
+
+const topic=document.getElementById("topic").value.trim();
+const type=document.getElementById("type").value;
+const duration=document.getElementById("duration").value;
+
+if(!topic){
+
+alert("पहले कहानी का idea लिखें 🙂");
+return;
+
+}
+
+let sceneCount;
+
+if(duration==="30"){
+sceneCount=4;
+}else if(duration==="60"){
+sceneCount=6;
+}else{
+sceneCount=8;
+}
+
+
+const title=
+topic.length>60
+?topic.substring(0,60)+"..."
+:topic;
+
+
+const voiceLines=[
+
+"एक दिन इस कहानी की शुरुआत होती है। सब कुछ बिल्कुल सामान्य था।",
+
+"लेकिन अचानक एक ऐसी घटना हुई जिसने सबको हैरान कर दिया!",
+
+"अब कहानी में आया सबसे मजेदार मोड़। किसी को समझ नहीं आ रहा था कि क्या करें।",
+
+"मुख्य किरदार ने हिम्मत दिखाई और एक शानदार idea निकाला।",
+
+"लेकिन तभी एक नई परेशानी सामने आ गई।",
+
+"आखिरकार समस्या का हल मिल गया और सबके चेहरे पर मुस्कान आ गई।",
+
+"इस मजेदार घटना से सभी ने एक जरूरी बात सीखी।",
+
+"और इस तरह कहानी एक प्यारी सी सीख के साथ खत्म हुई।"
+
+];
+
+
+let html=`
+
+<span class="badge">${esc(type)} • ${duration} Seconds</span>
+
+<h2 class="resultTitle">
+🎬 ${esc(title)}
+</h2>
+
+<p>
+आपकी कहानी का पूरा YouTube-ready plan तैयार है।
+</p>
+
+<h2 class="sectionTitle">📖 Story</h2>
+
+<div class="box">
+
+एक दिन ${esc(topic)}।
+
+शुरुआत में सब कुछ सामान्य लगता है,
+लेकिन अचानक कहानी में एक मजेदार मोड़ आता है।
+मुख्य किरदार हिम्मत और समझदारी से समस्या का सामना करता है।
+
+आखिर में समस्या हल हो जाती है और सभी खुश हो जाते हैं।
+इस कहानी से हमें सीख मिलती है कि मुश्किल समय में
+हिम्मत और समझदारी से काम लेना चाहिए।
+
+</div>
+
+<h2 class="sectionTitle">🎬 Scene-by-Scene Script</h2>
+
+`;
+
+
+for(let i=1;i<=sceneCount;i++){
+
+const voice=voiceLines[(i-1)%voiceLines.length];
+
+const prompt=
+`Bright colorful 3D cartoon animation,
+${topic},
+Indian environment, cute expressive characters,
+cinematic lighting, vibrant colors,
+high quality, consistent characters,
+YouTube Shorts 16:9`;
+
+const copyText=
+`Scene ${i}
+
+Image Prompt:
+${prompt}
+
+Voice Over:
+${voice}`;
+
+
+html+=`
+
+<div class="scene">
+
+<div class="sceneHead">
+
+<h3>Scene ${i}</h3>
+
+<button class="copyBtn"
+onclick="copyText(${JSON.stringify(copyText)})">
+📋 Copy
+</button>
+
+</div>
+
+<p>
+🎨 <b>Image Prompt</b>
+</p>
+
+<div class="box">
+${esc(prompt)}
+</div>
+
+<p>
+🎙️ <b>Voice Over</b>
+</p>
+
+<div class="box">
+${esc(voice)}
+</div>
+
+</div>
+
+`;
+
+}
+
+
+const fullPrompts=[];
+
+for(let i=1;i<=sceneCount;i++){
+
+fullPrompts.push(
+`Scene ${i}: Bright colorful 3D cartoon animation, ${topic}, Indian environment, cute expressive characters, cinematic lighting, vibrant colors, consistent characters, 16:9`
+);
+
+}
+
+
+const youtubeTitle=
+`${title} | Hindi Cartoon Story | Funny Story | #shorts`;
+
+
+const description=
+`देखिए ${title} की मजेदार Hindi cartoon story।
+
+इस कहानी में आपको comedy, adventure और एक प्यारी सीख देखने को मिलेगी।
+
+अगर आपको ऐसी cartoon stories पसंद हैं तो channel को subscribe करें।
+
+#cartoon #hindistory #story #shorts #kidsstory`;
+
+
+html+=`
+
+<h2 class="sectionTitle">🖼️ All Image Prompts</h2>
+
+<div class="box">
+${esc(fullPrompts.join("\\n\\n"))}
+</div>
+
+<button class="smallBtn"
+onclick="copyText(${JSON.stringify(fullPrompts.join("\\n\\n"))})">
+📋 सभी Prompts Copy
+</button>
+
+
+<h2 class="sectionTitle">📺 YouTube Title</h2>
+
+<div class="box">
+${esc(youtubeTitle)}
+</div>
+
+<button class="smallBtn"
+onclick="copyText(${JSON.stringify(youtubeTitle)})">
+📋 Title Copy
+</button>
+
+
+<h2 class="sectionTitle">📝 YouTube Description</h2>
+
+<div class="box">
+${esc(description)}
+</div>
+
+<button class="smallBtn"
+onclick="copyText(${JSON.stringify(description)})">
+📋 Description Copy
+</button>
+
+`;
+
+const result=document.getElementById("result");
+
+result.innerHTML=html;
+
+result.classList.remove("hidden");
+
+result.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+function copyText(text){
+
+if(navigator.clipboard){
+
+navigator.clipboard.writeText(text)
+.then(()=>{
+alert("कॉपी हो गया! ✅");
+})
+.catch(()=>{
+alert("Copy नहीं हो पाया।");
+});
+
+}else{
+
+alert("आपके browser में Copy सुविधा उपलब्ध नहीं है।");
+
+}
+
+}
+
+</script>
+
+</body
